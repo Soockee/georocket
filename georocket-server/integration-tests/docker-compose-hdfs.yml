@@ -1,4 +1,4 @@
-integration-tester:
+integration-tester_hdfs:
   build: .
   command: hdfs
   links:
