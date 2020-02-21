@@ -14,12 +14,9 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Run tests and install
-        run: ./gradlew check installDist -i
-
       - name: Build Docker image
         run: |
-          docker build -t georocket/georocket .
+          docker build -t -f Dockerfile_CI georocket/georocket .
           docker tag georocket/georocket georocket/georocket:unstable
 
       - name: Run integration tests
