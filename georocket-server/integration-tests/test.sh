@@ -16,7 +16,7 @@ declare -a pids
 
 # run processes and store pids in array
 for i in $array_test_commands; do
-    ./procs[${i}] &
+    ./test-one.sh [${i}] &
     pids[${i}]=$!
 done
 
