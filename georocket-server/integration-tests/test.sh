@@ -20,6 +20,7 @@ index=0
 for i in $array_test_commands; do
     ./test-one.sh ${i} &
     pids[${i}]=$!
+    echo pids[${i}]
     let "a += 1"
 done
 
