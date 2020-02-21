@@ -13,11 +13,14 @@ array_test_commands[4]=hdfs
 # pids of lunched backgroundprocess
 declare -a pids
 
+# pids index 
+index=0
 
 # run processes and store pids in array
 for i in $array_test_commands; do
     ./test-one.sh [${i}] &
     pids[${i}]=$!
+    let "a += 1"
 done
 
 # wait for all pids
