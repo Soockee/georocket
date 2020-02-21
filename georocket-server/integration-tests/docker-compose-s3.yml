@@ -1,4 +1,4 @@
-integration-tester:
+integration-tester_s3:
   build: .
   command: s3
   links:
