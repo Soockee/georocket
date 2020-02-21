@@ -16,7 +16,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t -f Dockerfile_CI georocket/georocket .
+          docker build -t --file Dockerfile_CI georocket/georocket .
           docker tag georocket/georocket georocket/georocket:unstable
 
       - name: Run integration tests
