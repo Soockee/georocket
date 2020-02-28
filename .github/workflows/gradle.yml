@@ -7,8 +7,8 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         server-integration-test-var: [ 'standalone', 'h2', 'mongo', 's3', 'hdfs'] 
     steps:
       - uses: actions/checkout@v1
@@ -25,28 +25,34 @@ jobs:
           docker build -t georocket/georocket .
           docker tag georocket/georocket georocket/georocket:unstable
 
-      - name: Run integration tests
-      - if: server-integration-test-var == "standalone"
+      - name: Run integration tests standalone
+        if: server-integration-test-var == "standalone"
         run: |
           cd georocket-server/integration-tests
           ./test-one.sh standalone
           cd ../..
-      - if: server-integration-test-var == "h2"
+      - name: Run integration tests h2
+        if: server-integration-test-var == "h2"
         run: |
           cd georocket-server/integration-tests
           ./test-one.sh h2
           cd ../..
-      - if: server-integration-test-var == "mongo"
+
+      - name: Run integration tests mongo
+        if: server-integration-test-var == "mongo"
         run: |
           cd georocket-server/integration-tests
           ./test-one.sh mongo
           cd ../..
-      - if: server-integration-test-var == "s3"
+      - name: Run integration tests s3
+        if: server-integration-test-var == "s3"
         run: |
           cd georocket-server/integration-tests
           ./test-one.sh s3
-          cd ../..
-      - if: server-integration-test-var == "hdfs"
+          cd ../.
+          
+      - name: Run integration tests hdfs
+        if: server-integration-test-var == "hdfs"
         run: |
           cd georocket-server/integration-tests
           ./test-one.sh hdfs
