@@ -6,10 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        server-integration-test-var: [ 'standalone', 'h2', 'mongo', 's3', 'hdfs'] 
-        os: ['ubuntu-latest']
+
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 1.8
@@ -28,7 +25,7 @@ jobs:
       - name: Run integration tests
         run: |
           cd georocket-server/integration-tests
-          ./test-one.sh ${{ server-integration-test-var }}
+          ./test.sh
           cd ../..
 
       - name: Upload snapshot
