@@ -7,9 +7,9 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         server-integration-test-var: [ 'standalone', 'h2', 'mongo', 's3', 'hdfs'] 
+        os: ['ubuntu-latest']
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 1.8
@@ -24,40 +24,11 @@ jobs:
         run: |
           docker build -t georocket/georocket .
           docker tag georocket/georocket georocket/georocket:unstable
-
-      - name: Run integration tests standalone
-        if: server-integration-test-var == "standalone"
+      - name: Run integration tests
         run: |
           cd georocket-server/integration-tests
-          ./test-one.sh standalone
+          ./test-one.sh ${{ matrix.server-integration-test-var }}
           cd ../..
-      - name: Run integration tests h2
-        if: server-integration-test-var == "h2"
-        run: |
-          cd georocket-server/integration-tests
-          ./test-one.sh h2
-          cd ../..
-
-      - name: Run integration tests mongo
-        if: server-integration-test-var == "mongo"
-        run: |
-          cd georocket-server/integration-tests
-          ./test-one.sh mongo
-          cd ../..
-      - name: Run integration tests s3
-        if: server-integration-test-var == "s3"
-        run: |
-          cd georocket-server/integration-tests
-          ./test-one.sh s3
-          cd ../.
-          
-      - name: Run integration tests hdfs
-        if: server-integration-test-var == "hdfs"
-        run: |
-          cd georocket-server/integration-tests
-          ./test-one.sh hdfs
-          cd ../..
-
       - name: Upload snapshot
         if: github.repository == 'georocket/georocket' && github.event_name == 'push'
         env:
@@ -67,7 +38,6 @@ jobs:
           if [[ $(./gradlew -q :georocket-server:getVersion) == *SNAPSHOT* ]]; then
             ./gradlew upload;
           fi
-
       - name: Push Docker image
         if: github.repository == 'georocket/georocket' && github.event_name == 'push'
         env:
