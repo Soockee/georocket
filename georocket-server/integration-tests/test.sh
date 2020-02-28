@@ -19,9 +19,9 @@ index=0
 # run processes and store pids in array
 for i in $array_test_commands; do
     ./test-one.sh ${i} &
-    pids[${i}]=$!
-    echo pids[${i}]
-    let "a += 1"
+    pids[${index}]=$!
+    echo pids[${index}]
+    let "index += 1"
 done
 
 # wait for all pids
