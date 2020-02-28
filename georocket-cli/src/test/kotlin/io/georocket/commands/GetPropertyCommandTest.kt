@@ -15,8 +15,7 @@ import org.junit.runner.RunWith
 /**
  * Test for [GetPropertyCommand]
  */
-
- /* 
+ 
 @RunWith(VertxUnitRunner::class)
 class GetPropertyCommandTest : CommandTestBase<GetPropertyCommand>() {
   override val cmd = GetPropertyCommand()
@@ -41,4 +40,3 @@ class GetPropertyCommandTest : CommandTestBase<GetPropertyCommand>() {
     }
   }
 }
-*/
