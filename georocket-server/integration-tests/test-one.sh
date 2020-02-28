@@ -35,8 +35,6 @@ if [[ -z $MODE ]]; then
   MODE="standalone"
 fi
 
-printf "Mode: ${Mode}"
-
 cleanup () {
   docker-compose -f docker-compose-$MODE.yml -p ci kill
   docker-compose -f docker-compose-$MODE.yml -p ci rm -f

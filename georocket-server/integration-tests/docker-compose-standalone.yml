@@ -1,4 +1,4 @@
-integration-tester_standalone:
+integration-tester:
   build: .
   command: standalone
   links:
