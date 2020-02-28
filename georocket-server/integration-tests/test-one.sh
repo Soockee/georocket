@@ -35,6 +35,8 @@ if [[ -z $MODE ]]; then
   MODE="standalone"
 fi
 
+printf "Mode: ${Mode}"
+
 cleanup () {
   docker-compose -f docker-compose-$MODE.yml -p ci kill
   docker-compose -f docker-compose-$MODE.yml -p ci rm -f
@@ -45,7 +47,7 @@ if [ $? -ne 0 ] ; then
   printf "${RED}Docker Compose Failed${NC}\n"
   exit -1
 fi
-docker logs -f ci_integration-tester_$MODE_1 &
+docker logs -f ci_integration-tester_${MODE}_1 &
 TEST_EXIT_CODE=`docker wait ci_integration-tester_$MODE_1`
 if [ -z ${TEST_EXIT_CODE+x} ] || [ "$TEST_EXIT_CODE" -ne 0 ] ; then
   printf "${RED}Tests Failed${NC} - Exit Code: $TEST_EXIT_CODE\n"
