@@ -15,12 +15,13 @@ import org.junit.runner.RunWith
 /**
  * Test for [GetPropertyCommand]
  */
- 
 @RunWith(VertxUnitRunner::class)
 class GetPropertyCommandTest : CommandTestBase<GetPropertyCommand>() {
   override val cmd = GetPropertyCommand()
 
-  
+  /**
+   * Test a simple get
+   */
   @Test
   fun testGetProperty(context: TestContext) {
     val body = "a,b,c"
