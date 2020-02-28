@@ -9,7 +9,6 @@ jobs:
     strategy:
       matrix:
         server-integration-test-var: [ 'standalone', 'h2', 'mongo', 's3', 'hdfs'] 
-        os: ['ubuntu-latest']
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 1.8
