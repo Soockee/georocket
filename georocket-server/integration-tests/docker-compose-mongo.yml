@@ -1,4 +1,4 @@
-integration-tester_mongo:
+integration-tester:
   build: .
   command: mongo
   links:
