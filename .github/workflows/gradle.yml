@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        fail-fast: false
         server-integration-test-var: [ 'standalone', 'h2', 'mongo', 's3', 'hdfs'] 
-        os: ['ubuntu-latest']
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 1.8
@@ -26,9 +26,30 @@ jobs:
           docker tag georocket/georocket georocket/georocket:unstable
 
       - name: Run integration tests
+      - if: server-integration-test-var == "standalone"
         run: |
           cd georocket-server/integration-tests
-          ./test-one.sh ${{ server-integration-test-var }}
+          ./test-one.sh standalone
+          cd ../..
+      - if: server-integration-test-var == "h2"
+        run: |
+          cd georocket-server/integration-tests
+          ./test-one.sh h2
+          cd ../..
+      - if: server-integration-test-var == "mongo"
+        run: |
+          cd georocket-server/integration-tests
+          ./test-one.sh mongo
+          cd ../..
+      - if: server-integration-test-var == "s3"
+        run: |
+          cd georocket-server/integration-tests
+          ./test-one.sh s3
+          cd ../..
+      - if: server-integration-test-var == "hdfs"
+        run: |
+          cd georocket-server/integration-tests
+          ./test-one.sh hdfs
           cd ../..
 
       - name: Upload snapshot
