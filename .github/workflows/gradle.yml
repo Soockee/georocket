@@ -6,8 +6,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         server-integration-test-var: [ 'standalone', 'h2', 'mongo', 's3', 'hdfs'] 
     steps:
@@ -24,11 +25,13 @@ jobs:
         run: |
           docker build -t georocket/georocket .
           docker tag georocket/georocket georocket/georocket:unstable
+
       - name: Run integration tests
         run: |
           cd georocket-server/integration-tests
           ./test-one.sh ${{ matrix.server-integration-test-var }}
           cd ../..
+
       - name: Upload snapshot
         if: github.repository == 'georocket/georocket' && github.event_name == 'push'
         env:
@@ -38,6 +41,7 @@ jobs:
           if [[ $(./gradlew -q :georocket-server:getVersion) == *SNAPSHOT* ]]; then
             ./gradlew upload;
           fi
+
       - name: Push Docker image
         if: github.repository == 'georocket/georocket' && github.event_name == 'push'
         env:
